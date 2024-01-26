@@ -88,7 +88,7 @@ def realizar_consulta(codigo):
     except requests.exceptions.RequestException as e:
         print(f"Error en la solicitud: {e}")
 
-def main():
+def camara():
     cap = cv2.VideoCapture(0)
     while True:
         ret, frame = cap.read()
@@ -128,6 +128,25 @@ def main():
     print(f'{brand}: {nombre_producto}')
     cap.release()
     cv2.destroyAllWindows()
+
+def opcion_2():
+    print("Has seleccionado la opción 2.")
+    # Agrega aquí el código correspondiente a la opción 2
+
+def main():
+    print("Bienvenido al buscador de productos")
+    print("Por favor, selecciona una opción de busqueda:")
+    print("1. Mediante Camara")
+    print("2. Mediante Texto")
+
+    opcion = input("Ingresa el número de la opción deseada (1 o 2): ")
+
+    if opcion == '1':
+        camara()
+    elif opcion == '2':
+        opcion_2()
+    else:
+        print("Opción no válida. Por favor, ingresa 1 o 2.")
 
 if __name__ == "__main__":
     main()

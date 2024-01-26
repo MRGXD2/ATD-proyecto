@@ -141,7 +141,16 @@ def texto():
     carre_acortado = {k: carre[k] for k in list(carre)[:5]}
     dia_acortado = {k: dia[k] for k in list(dia)[:5]}
     # Imprimir los diccionario acortado
-    return carre_acortado, dia_acortado
+    create_supermarket_table(carre_acortado, dia_acortado)
+
+def create_supermarket_table(supermarket1, supermarket2):
+    # Convertir diccionarios a dataframes
+    df1 = pd.DataFrame(list(supermarket1.items()), columns=['Producto', 'Precio en Carrefour'])
+    df2 = pd.DataFrame(list(supermarket2.items()), columns=['Producto', 'Precio en DIA'])
+
+    # Mostrar las tablas
+    print(df1)
+    print(df2)
 
 def main():
     print("Bienvenido al buscador de productos")

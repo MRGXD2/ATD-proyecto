@@ -139,8 +139,7 @@ def texto():
     carre_acortado = {k: carre[k] for k in list(carre)[:5]}
     dia_acortado = {k: dia[k] for k in list(dia)[:5]}
     # Imprimir los diccionario acortado
-    print(carre_acortado)
-    print(dia_acortado)
+    return carre_acortado, dia_acortado
 
 def main():
     print("Bienvenido al buscador de productos")

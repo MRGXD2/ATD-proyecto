@@ -129,9 +129,18 @@ def camara():
     cap.release()
     cv2.destroyAllWindows()
 
-def opcion_2():
+def texto():
     print("Has seleccionado la opción 2.")
     # Agrega aquí el código correspondiente a la opción 2
+    producto=input('Introduzca el producto a buscar:')
+    carre=extraer_carrefour('+'.join(producto.split()))
+    # Acortar el diccionario a los primeros 5 elementos
+    dia=extraer_dia('+'.join(producto.split()))
+    carre_acortado = {k: carre[k] for k in list(carre)[:5]}
+    dia_acortado = {k: dia[k] for k in list(dia)[:5]}
+    # Imprimir los diccionario acortado
+    print(carre_acortado)
+    print(dia_acortado)
 
 def main():
     print("Bienvenido al buscador de productos")
@@ -144,7 +153,7 @@ def main():
     if opcion == '1':
         camara()
     elif opcion == '2':
-        opcion_2()
+        texto()
     else:
         print("Opción no válida. Por favor, ingresa 1 o 2.")
 

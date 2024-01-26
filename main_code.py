@@ -133,21 +133,20 @@ def camara():
 
 def texto():
     print("Has seleccionado la opción 2.")
-    # Agrega aquí el código correspondiente a la opción 2
-    producto=input('Introduzca el producto a buscar:')
+    producto=input('Introduzca el producto a buscar:')#solicita el producto al usuario
     carre=extraer_carrefour('+'.join(producto.split()))
-    # Acortar el diccionario a los primeros 5 elementos
     dia=extraer_dia('+'.join(producto.split()))
+    
+    # Acortar los diccionarios a los primeros 5 elementos
     carre_acortado = {k: carre[k] for k in list(carre)[:5]}
     dia_acortado = {k: dia[k] for k in list(dia)[:5]}
-    # Imprimir los diccionario acortado
+    # Imprimir los diccionarios acortados
     create_supermarket_table(carre_acortado, dia_acortado)
 
 def create_supermarket_table(supermarket1, supermarket2):
     # Convertir diccionarios a dataframes
     df1 = pd.DataFrame(list(supermarket1.items()), columns=['Producto', 'Precio en Carrefour'])
     df2 = pd.DataFrame(list(supermarket2.items()), columns=['Producto', 'Precio en DIA'])
-
     # Mostrar las tablas
     print(df1)
     print(df2)

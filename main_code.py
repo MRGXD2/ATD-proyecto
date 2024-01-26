@@ -109,6 +109,8 @@ def camara():
     etiqueta_brand = soup.find('td',class_='metadata-label',string=re.compile(r'brand',re.IGNORECASE))
     if etiqueta_brand:
         brand = (etiqueta_brand.find_next_sibling('td')).get_text(strip=True) + ' '
+    else:
+        brand = ''
     if clase:
         producto = clase.text
         prefijo = 0

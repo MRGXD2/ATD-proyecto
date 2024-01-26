@@ -45,7 +45,7 @@ def extraer_dia(producto):
         d[producto.text]=precio.text.replace('\xa0','')# se reemplaza el caracter del espacio
     return d
     
-
+#esta funcion finalmente no se ha llegado a implementar en el codigo principal de busqueda
 def descarte_marcas_blancas(texto, marca):
         d_marcas_blancas = {'mercadona':'hacendado','carrefour':'carrefour','consum':'consum',
                             'el corte inglés':'el corte inglés','dia':'dia'}
@@ -72,10 +72,6 @@ def read_barcodes(frame):
             return (barcode_data,True)
     return (None,False)
 
-def generar_tabla(lista):
-    df = pd.DataFrame('---',columns= lista ,index='nombre_producto precio precio_unitario'.split())
-    return df
-
 def realizar_consulta(codigo):
     url = f"https://go-upc.com/search?q={codigo}"
     try:
@@ -89,6 +85,7 @@ def realizar_consulta(codigo):
         print(f"Error en la solicitud: {e}")
 
 def camara():
+    print("Has seleccionado la opción 1.")
     cap = cv2.VideoCapture(0)
     while True:
         ret, frame = cap.read()
@@ -126,10 +123,21 @@ def camara():
     for super in lista_super:
         if descarte_marcas_blancas(producto, super):
             pass
-    generar_tabla(lista_super)
     print(f'{brand}: {nombre_producto}')
     cap.release()
     cv2.destroyAllWindows()
+
+    carre=extraer_carrefour('+'.join(nombre_producto.split()[:1]))
+    dia=extraer_dia('+'.join(nombre_producto.split()[:1]))
+
+    if len(carre)==0 and len(dia)==0:
+        raise ValueError('El producto no se encuentra en estos supermercados')
+    
+    # Acortar los diccionarios a los primeros 5 elementos
+    carre_acortado = {k: carre[k] for k in list(carre)[:5]}
+    dia_acortado = {k: dia[k] for k in list(dia)[:5]}
+    # Imprimir los diccionarios acortados
+    create_supermarket_table(carre_acortado, dia_acortado)
 
 def texto():
     print("Has seleccionado la opción 2.")

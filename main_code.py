@@ -11,6 +11,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
 def extraer_carrefour(producto):
+     '''
+    Recibe el nombre de un producto para realizar la búsqueda en la página de carrefour,
+    devuelve un diccionario con los resultados y sus precios.
+    '''
     driver = webdriver.Chrome()
 
     driver.get(f'https://www.carrefour.es/?q={producto}')  #el driver accede al sitio web de carrefour con el producto buscado
@@ -31,6 +35,10 @@ def extraer_carrefour(producto):
 
 
 def extraer_dia(producto):
+    '''
+    Recibe el nombre de un producto para realizar la búsqueda en la página de día,
+    devuelve un diccionario con los resultados y sus precios.
+    '''
     driver = webdriver.Chrome()
     driver.get(f'https://www.dia.es/search?q={producto}')
     time.sleep(1)
@@ -47,6 +55,9 @@ def extraer_dia(producto):
     
 
 def descarte_marcas_blancas(texto, marca):
+    '''
+    Funcion que recibe una marca en formato str y devuleve un booleano marcando si es una marca blanca
+    '''
         d_marcas_blancas = {'mercadona':'hacendado','carrefour':'carrefour','consum':'consum',
                             'el corte inglés':'el corte inglés','dia':'dia'}
         if marca in d_marcas_blancas:
@@ -57,6 +68,10 @@ def descarte_marcas_blancas(texto, marca):
         return False
 
 def read_barcodes(frame):
+    '''
+    Recibe un fotograma y trata de identificar y leer los posibles codifos de barra en formato utf-8.
+    Devuelve la lectura y un booleano que afirma o desmiente la lectura.
+    '''
     barcodes = decode(frame)
     for barcode in barcodes:
         barcode_data = barcode.data.decode('utf-8')
@@ -73,6 +88,10 @@ def read_barcodes(frame):
     return (None,False)
 
 def realizar_consulta(codigo):
+    '''
+    Recibe un codigo de barra en forma numérica y de vuelve su marca
+    y nombre de producto tras acceder por Webscraping
+    '''
     url = f"https://go-upc.com/search?q={codigo}"
     try:
         response = requests.get(url)
@@ -85,6 +104,10 @@ def realizar_consulta(codigo):
         print(f"Error en la solicitud: {e}")
 
 def camara():
+    '''
+    Selección de la opción de cámara que abre la webcam y lee los posibles códigos
+    que se presenten para extraer el número de la imagen.
+    '''
     print("Has seleccionado la opción 1.")
     cap = cv2.VideoCapture(0)
     while True:
@@ -140,6 +163,9 @@ def camara():
     create_supermarket_table(carre_acortado, dia_acortado)
 
 def texto():
+    '''
+    Permite realizar las búsquedas de productos mediante una opción manual.
+    '''
     print("Has seleccionado la opción 2.")
     producto=input('Introduzca el producto a buscar:')#solicita el producto al usuario
     carre=extraer_carrefour('+'.join(producto.split()))
@@ -154,6 +180,9 @@ def texto():
     create_supermarket_table(carre_acortado, dia_acortado)
 
 def create_supermarket_table(supermarket1, supermarket2):
+    '''
+    genera tablas para los distintos sumpermercados, dispone la información en las mismas
+    '''
     # Convertir diccionarios a dataframes
     df1 = pd.DataFrame(list(supermarket1.items()), columns=['Producto', 'Precio en Carrefour'])
     df2 = pd.DataFrame(list(supermarket2.items()), columns=['Producto', 'Precio en DIA'])

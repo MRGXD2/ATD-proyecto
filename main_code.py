@@ -45,7 +45,7 @@ def extraer_dia(producto):
         d[producto.text]=precio.text.replace('\xa0','')# se reemplaza el caracter del espacio
     return d
     
-#esta funcion finalmente no se ha llegado a implementar en el codigo principal de busqueda
+
 def descarte_marcas_blancas(texto, marca):
         d_marcas_blancas = {'mercadona':'hacendado','carrefour':'carrefour','consum':'consum',
                             'el corte inglés':'el corte inglés','dia':'dia'}
@@ -145,6 +145,8 @@ def texto():
     carre=extraer_carrefour('+'.join(producto.split()))
     dia=extraer_dia('+'.join(producto.split()))
     
+    if len(carre)==0 and len(dia)==0:
+        raise ValueError('El producto no se encuentra en estos supermercados')
     # Acortar los diccionarios a los primeros 5 elementos
     carre_acortado = {k: carre[k] for k in list(carre)[:5]}
     dia_acortado = {k: dia[k] for k in list(dia)[:5]}
